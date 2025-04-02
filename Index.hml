@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تبرعات لدعم تعليم البلوكتشين</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: #f9f9f9; padding: 20px; border-radius: 10px; }
+        button { padding: 10px 20px; margin-top: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>ساهم في نشر تعليم البلوكتشين</h2>
+        <p>ندعوكم لدعم مشروع تعليم البلوكتشين في الشرق الأوسط وشمال أفريقيا من خلال التبرعات.</p>
+        <p><strong>عنوان المحفظة:</strong></p>
+        <input type="text" id="walletAddress" value="0xYourWalletAddress" readonly>
+        <button onclick="copyAddress()">نسخ العنوان</button>
+    </div><script>
+    function copyAddress() {
+        var addressField = document.getElementById("walletAddress");
+        addressField.select();
+        document.execCommand("copy");
+        alert("تم نسخ العنوان!");
+    }
+</script>
+
+</body>
+</html>
