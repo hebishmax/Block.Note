@@ -7,41 +7,67 @@
   <style>
     body {
       font-family: Tahoma, sans-serif;
-      text-align: center;
-      background: #f9f9f9;
+      background: #f4f7f8;
       margin: 0;
-      padding: 20px;
+      padding: 30px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5em;
+      background: linear-gradient(90deg, #00aaff, #00cc88);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    p.main-message {
+      font-size: 1.4em;
+      color: #333;
+      margin-bottom: 20px;
     }
     img {
-      max-width: 300px;
-      margin: 20px auto;
+      max-width: 340px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      box-shadow: 0 0 15px rgba(0,0,0,0.15);
+      margin: 20px auto;
     }
     .btn {
       display: inline-block;
-      margin-top: 20px;
+      margin: 15px 10px;
       padding: 12px 25px;
       background-color: #0088cc;
       color: white;
       text-decoration: none;
       border-radius: 8px;
       font-size: 1em;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #006699;
+    }
+    .hidden {
+      opacity: 0;
+      position: absolute;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
 
   <h1>أهلاً في المستقبل</h1>
-  <p>الوحدة الرقمية — أول عملة على الإنترنت العادي</p>
+  <p class="main-message">الوحدة الرقمية — أول عملة على الإنترنت العادي، تمتلكها وتحملها معك أينما ذهبت.</p>
 
-  <img src="https://i.ibb.co/YkS9bgn/unit1.png" alt="الوحدة رقم 1">
+  <!-- استبدل رابط الصورة برابط IPFS -->
+  <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" alt="الوحدة رقم 1">
 
   <canvas id="chart" width="300" height="200"></canvas>
-
-  <a href="http://t.me/@Hebishmax" class="btn" target="_blank">حجز وحدتك</a>
+  <br>
+  <button class="btn" onclick="copyWallet()">نسخ محفظة المشروع</button>
+  <a href="mailto:hebishpartner@gmail.com" class="btn">حجز عبر البريد</a>
+  <input type="text" value="0x61916c290c837cd1fe283dcf56801bc3a16f7b6f" id="walletAddress" class="hidden">
 
   <script>
+    // إعداد الرسم البياني باستخدام Chart.js
     const ctx = document.getElementById('chart').getContext('2d');
     new Chart(ctx, {
       type: 'line',
@@ -61,6 +87,15 @@
         scales: { y: { beginAtZero: true } }
       }
     });
+
+    // دالة نسخ المحفظة
+    function copyWallet() {
+      const copyText = document.getElementById("walletAddress");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      alert("تم نسخ عنوان المحفظة:\n" + copyText.value);
+    }
   </script>
 
 </body>
