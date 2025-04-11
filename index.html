@@ -13,13 +13,13 @@
   <style>
     body {
       font-family: sans-serif;
-      padding: 2em;
+      padding: 1em;
       background: #f5f5f5;
       margin: 0;
     }
     .card {
       background: white;
-      padding: 2em;
+      padding: 1.5em;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       max-width: 500px;
@@ -71,18 +71,25 @@
       width: auto;
       padding: 0.4em 1em;
     }
+    .footer {
+      text-align: center;
+      margin-top: 2em;
+      color: #888;
+      font-size: 0.9em;
+    }
+    .footer a {
+      color: #555;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
     @media (max-width: 600px) {
-      body {
+      .card {
         padding: 1em;
       }
-      .card {
-        padding: 1.5em;
-      }
       .status {
-        font-size: 1.5em;
-      }
-      button, input {
-        font-size: 1em;
+        font-size: 1.4em;
       }
     }
   </style>
@@ -92,13 +99,10 @@
     <div class="lang-switch">
       <button onclick="switchLang()">AR / EN</button>
     </div>
-    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute"
-         alt="Silver Token Logo" />
+    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" alt="Silver Token Logo" />
     <h2 id="unit-label" style="text-align: center; color: #444;">Digital Unit = 5 USDT</h2>
-    
     <p><strong id="status-label">Current Status:</strong></p>
     <div id="status" class="status">Available</div>
-    
     <button onclick="copyAddress()" id="copy-btn">Copy Contract Address</button>
     <small id="note-text">Note: You can send the token directly to this contract address.</small>
     <hr />
@@ -112,7 +116,10 @@
         </ul>
       </small>
     </p>
-    <p style="text-align: center; margin-top: 2em; color: #888;">chat gpt - hebish</p>
+    <div class="footer">
+      <p>chat gpt - hebish</p>
+      <a href="https://www.facebook.com/mohamedhebishfacebook?mibextid=ZbWKwL" target="_blank">Facebook Profile</a>
+    </div>
   </div>
 
   <script>
@@ -136,4 +143,69 @@
         note: "ملاحظة: يمكنك إرسال التوكن مباشرة إلى هذا العنوان.",
         support: "دعم المشروع",
         email: "تواصل عبر البريد الإلكتروني",
-        li1: "استلم وحدتك الرقمية عبر البريد الإلكتروني
+        li1: "استلم وحدتك الرقمية عبر البريد الإلكتروني",
+        li2: "أول كود غير قابل للاستبدال في العالم"
+      }
+    };
+
+    function switchLang() {
+      currentLang = currentLang === "en" ? "ar" : "en";
+      applyLang();
+    }
+
+    function applyLang() {
+      const t = translations[currentLang];
+      document.getElementById("unit-label").innerText = t.unit;
+      document.getElementById("status-label").innerText = t.status;
+      document.getElementById("copy-btn").innerText = t.copy;
+      document.getElementById("note-text").innerText = t.note;
+      document.getElementById("support-title").innerText = t.support;
+      document.getElementById("email-btn").innerText = t.email;
+      document.getElementById("email-li-1").innerText = t.li1;
+      document.getElementById("email-li-2").innerText = t.li2;
+    }
+
+    function detectLang() {
+      const lang = navigator.language || navigator.userLanguage;
+      currentLang = lang.startsWith("ar") ? "ar" : "en";
+      applyLang();
+    }
+
+    const contractAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
+    const abi = [
+      "function getStatus() public view returns (string)",
+      "function setStatus(string calldata _status) public",
+      "function forwardStatus(address targetContract) public",
+      "function owner() public view returns (address)"
+    ];
+
+    const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
+    const contract = new ethers.Contract(contractAddress, abi, provider);
+
+    async function loadInfo() {
+      try {
+        const status = await contract.getStatus();
+        document.getElementById("status").innerText = status || "Available";
+      } catch (err) {
+        console.error("Error loading status:", err);
+        document.getElementById("status").innerText = "Unavailable";
+      }
+    }
+
+    function copyAddress() {
+      navigator.clipboard.writeText(contractAddress).then(() => {
+        alert("Contract address copied: " + contractAddress);
+      });
+    }
+
+    function sendEmail() {
+      window.location.href = "mailto:hebishpartner@gmail.com?subject=SmartRelay%20Support";
+    }
+
+    window.onload = function() {
+      detectLang();
+      loadInfo();
+    };
+  </script>
+</body>
+</html>
