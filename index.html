@@ -1,43 +1,125 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>قريباً - Coming Soon</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartRelay UI</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <style>
-    body {
-      font-family: Tahoma, sans-serif;
-      background: #f4f7f8;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-    .container {
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      background-color: #fff;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-    h1 {
-      font-size: 3em;
-      color: #333;
-      margin-bottom: 10px;
-    }
-    p {
-      font-size: 1.2em;
-      color: #666;
-    }
+    body { font-family: sans-serif; padding: 2em; background: #f5f5f5; }
+    .card { background: white; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+    input, button { padding: 0.5em; margin: 0.5em 0; width: 100%; font-size: 1em; }
+    .status { font-size: 2em; margin: 1em 0; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Coming Soon</h1>
-    <p>قريباً...</p>
+  <div class="card">
+    <h2>SmartRelay Control Panel</h2>
+    <p><strong>Current Status:</strong> <span id="status" class="status">?</span></p>
+
+    <button onclick="setStatus('+')">Set Status to (+)</button>
+    <button onclick="setStatus('-')">Set Status to (-)</button>
+
+    <input type="text" id="targetContract" placeholder="Target contract address">
+    <button onclick="forwardStatus()">Forward Status</button>
+
+    <p>
+      <strong>Owner:</strong> 
+      <span id="owner">Loading...</span>
+      <button onclick="copyWallet()" style="margin-left: 10px;">Copy</button>
+    </p>
+
+    <hr />
+
+    <h3>Project Support</h3>
+
+    <p>
+      <strong>Project Wallet:</strong> 
+      <span id="projectWallet">0x61916c290c837cd1fe283dcf56801bc3a16f7b6f</span>
+      <button onclick="copyProjectWallet()">Copy</button>
+    </p>
+
+    <p>
+      <button onclick="sendEmail()">Contact via Email</button>
+    </p>
+
+    <button onclick="connect()">Connect Wallet</button>
   </div>
+
+  <script>
+    let provider, signer, contract;
+
+    const contractAddress = "YOUR_CONTRACT_ADDRESS_HERE";
+    const abi = [
+      "function getStatus() public view returns (string)",
+      "function setStatus(string calldata _status) public",
+      "function forwardStatus(address targetContract) public",
+      "function owner() public view returns (address)"
+    ];
+
+    async function connect() {
+      if (window.ethereum) {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        signer = provider.getSigner();
+        contract = new ethers.Contract(contractAddress, abi, signer);
+        loadInfo();
+      } else {
+        alert("MetaMask not found!");
+      }
+    }
+
+    async function loadInfo() {
+      const status = await contract.getStatus();
+      const owner = await contract.owner();
+      document.getElementById("status").innerText = status;
+      document.getElementById("owner").innerText = owner;
+    }
+
+    async function setStatus(status) {
+      try {
+        const tx = await contract.setStatus(status);
+        await tx.wait();
+        alert("Status updated to " + status);
+        loadInfo();
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+
+    async function forwardStatus() {
+      const target = document.getElementById("targetContract").value;
+      if (!ethers.utils.isAddress(target)) return alert("Invalid address");
+      try {
+        const tx = await contract.forwardStatus(target);
+        await tx.wait();
+        alert("Status forwarded!");
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    }
+
+    function copyWallet() {
+      const wallet = document.getElementById("owner").innerText;
+      navigator.clipboard.writeText(wallet).then(() => {
+        alert("Copied owner: " + wallet);
+      }).catch(err => {
+        alert("Failed to copy: " + err);
+      });
+    }
+
+    function copyProjectWallet() {
+      const wallet = document.getElementById("projectWallet").innerText;
+      navigator.clipboard.writeText(wallet).then(() => {
+        alert("Copied Project Wallet: " + wallet);
+      }).catch(err => {
+        alert("Failed to copy wallet: " + err);
+      });
+    }
+
+    function sendEmail() {
+      window.location.href = "mailto:hebishpartner@gmail.com?subject=SmartRelay%20Support";
+    }
+  </script>
 </body>
 </html>
