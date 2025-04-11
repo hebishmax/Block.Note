@@ -1,88 +1,139 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Silver Token - أول وحدة رقمية ذكية</title>
-  <meta name="description" content="اكتشف مشروع Silver Token: وحدة رقمية تساوي 5 USDT، مع دعم عبر البريد الإلكتروني بدون الحاجة إلى ربط MetaMask.">
-  <meta name="keywords" content="Silver Token, توكن ذكي, وحدة رقمية, BSC Testnet, بدون MetaMask, smart contract">
+  <title>Silver Token - The First Smart Digital Unit</title>
+  <meta name="description" content="Discover the Silver Token project: a digital unit worth 5 USDT, with support via email and no MetaMask connection required.">
+  <meta name="keywords" content="Silver Token, smart token, digital unit, BSC Testnet, no MetaMask, smart contract">
   <meta name="author" content="silverhelparab">
+  <meta name="google-site-verification" content="google7f4fbd39717d3a1c.html">
   <link rel="icon" href="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" type="image/png">
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <style>
-    body { font-family: sans-serif; padding: 2em; background: #f5f5f5; direction: rtl; }
-    .card {
-      background: white; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 500px; margin: auto;
+    body {
+      font-family: sans-serif;
+      padding: 2em;
+      background: #f5f5f5;
+      margin: 0;
     }
-    input, button { padding: 0.5em; margin: 0.5em 0; width: 100%; font-size: 1em; }
-    .status { font-size: 2em; margin: 1em 0; color: #333; }
-    hr { margin: 20px 0; }
-    h3 { margin-top: 1.5em; }
+    .card {
+      background: white;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: auto;
+    }
+    img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      margin-bottom: 1em;
+      border-radius: 10px;
+    }
+    input, button {
+      padding: 0.8em;
+      margin: 0.5em 0;
+      width: 100%;
+      font-size: 1em;
+      border-radius: 8px;
+      border: none;
+      background: #444;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #666;
+    }
+    .status {
+      font-size: 1.8em;
+      margin: 1em 0;
+      color: green;
+      text-align: center;
+    }
+    hr {
+      margin: 20px 0;
+    }
+    h3 {
+      margin-top: 1.5em;
+      color: #333;
+    }
+    ul {
+      padding-left: 20px;
+      color: #555;
+    }
+    .lang-switch {
+      text-align: right;
+      margin-bottom: 1em;
+    }
+    .lang-switch button {
+      width: auto;
+      padding: 0.4em 1em;
+    }
     @media (max-width: 600px) {
-      body { padding: 1em; }
-      .card { padding: 1.5em; }
-      .status { font-size: 1.5em; }
-      button, input { font-size: 1em; }
+      body {
+        padding: 1em;
+      }
+      .card {
+        padding: 1.5em;
+      }
+      .status {
+        font-size: 1.5em;
+      }
+      button, input {
+        font-size: 1em;
+      }
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" 
-         alt="شعار Silver Token" 
-         style="width: 100%; max-height: 200px; object-fit: contain; margin-bottom: 1em; border-radius: 10px;" />
-    <h2 style="text-align: center; color: #444;">الوحدة الرقمية = 5 USDT</h2>
+    <div class="lang-switch">
+      <button onclick="switchLang()">AR / EN</button>
+    </div>
+    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute"
+         alt="Silver Token Logo" />
+    <h2 id="unit-label" style="text-align: center; color: #444;">Digital Unit = 5 USDT</h2>
     
-    <p><strong>الحالة الحالية:</strong> <span id="status" class="status">...</span></p>
-    <button onclick="copyAddress()">نسخ عنوان العقد</button>
-    <small>ملاحظة: يمكنك إرسال التوكن إلى هذا العنوان مباشرة.</small>
+    <p><strong id="status-label">Current Status:</strong></p>
+    <div id="status" class="status">Available</div>
+    
+    <button onclick="copyAddress()" id="copy-btn">Copy Contract Address</button>
+    <small id="note-text">Note: You can send the token directly to this contract address.</small>
     <hr />
-    <h3>الدعم الفني</h3>
+    <h3 id="support-title">Project Support</h3>
     <p>
-      <button onclick="sendEmail()">تواصل عبر البريد الإلكتروني</button>
+      <button onclick="sendEmail()" id="email-btn">Contact via Email</button>
       <small>
         <ul>
-          <li>استلم وحدتك الرقمية عبر الإيميل</li>
-          <li>أول رمز غير قابل للاستبدال في العالم</li>
+          <li id="email-li-1">Receive your digital unit via email</li>
+          <li id="email-li-2">The world's first non-fungible code</li>
         </ul>
       </small>
     </p>
     <p style="text-align: center; margin-top: 2em; color: #888;">chat gpt - hebish</p>
   </div>
+
   <script>
-    let provider, contract;
-    const contractAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
-    const abi = [
-      "function getStatus() public view returns (string)",
-      "function setStatus(string calldata _status) public",
-      "function forwardStatus(address targetContract) public",
-      "function owner() public view returns (address)"
-    ];
+    let currentLang = "en";
 
-    provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
-    contract = new ethers.Contract(contractAddress, abi, provider);
-    loadInfo();
-
-    async function loadInfo() {
-      try {
-        const status = await contract.getStatus();
-        document.getElementById("status").innerText = status;
-      } catch (err) {
-        console.error("خطأ أثناء جلب الحالة:", err);
-        document.getElementById("status").innerText = "غير متوفرة";
-      }
-    }
-
-    function copyAddress() {
-      navigator.clipboard.writeText(contractAddress).then(() => {
-        alert("تم نسخ عنوان العقد: " + contractAddress);
-      });
-    }
-
-    function sendEmail() {
-      window.location.href = "mailto:hebishpartner@gmail.com?subject=SmartRelay%20Support";
-    }
-  </script>
-</body>
-</html>
+    const translations = {
+      en: {
+        unit: "Digital Unit = 5 USDT",
+        status: "Current Status:",
+        copy: "Copy Contract Address",
+        note: "Note: You can send the token directly to this contract address.",
+        support: "Project Support",
+        email: "Contact via Email",
+        li1: "Receive your digital unit via email",
+        li2: "The world's first non-fungible code"
+      },
+      ar: {
+        unit: "الوحدة الرقمية = ٥ دولار رقمي",
+        status: "الحالة الحالية:",
+        copy: "نسخ عنوان العقد",
+        note: "ملاحظة: يمكنك إرسال التوكن مباشرة إلى هذا العنوان.",
+        support: "دعم المشروع",
+        email: "تواصل عبر البريد الإلكتروني",
+        li1: "استلم وحدتك الرقمية عبر البريد الإلكتروني
