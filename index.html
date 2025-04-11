@@ -15,8 +15,6 @@
     .status { font-size: 2em; margin: 1em 0; }
     hr { margin: 20px 0; }
     h3 { margin-top: 1.5em; }
-
-    /* تحسين للعرض على الأجهزة الصغيرة (الموبايل) */
     @media (max-width: 600px) {
       body { padding: 1em; }
       .card { padding: 1.5em; }
@@ -25,30 +23,37 @@
     }
   </style>
 </head>
-<body>
+<body onload="connect()">
   <div class="card">
-    <h2>SmartRelay Control Panel</h2>
+    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" 
+         alt="Silver Token Logo" 
+         style="width: 100%; max-height: 200px; object-fit: contain; margin-bottom: 1em; border-radius: 10px;" />
+
+    <h2 style="text-align: center; color: #444;">اكتتاب العملة الفضية</h2>
+    
     <p><strong>Current Status:</strong> <span id="status" class="status">?</span></p>
 
-    <button onclick="setStatus('+')">Set Status to (+)</button>
-    <button onclick="setStatus('-')">Set Status to (-)</button>
-
-    <input type="text" id="targetContract" placeholder="Target contract address">
-    <button onclick="forwardStatus()">Forward Status</button>
+    <button onclick="copyAddress()">نسخ عنوان العقد</button>
+    <small>ملاحظة: أرسل عبر محفظتك MetaMask إلى هذا العنوان.</small>
 
     <hr />
-
     <h3>Project Support</h3>
-
     <p>
       <button onclick="sendEmail()">Contact via Email</button>
+      <small>
+        <ul>
+          <li>أضف عنوان محفظتك بعد تحويل BNB</li>
+          <li>أضف إشعار المعاملة من Blockchain</li>
+        </ul>
+      </small>
     </p>
+
+    <p style="text-align: center; margin-top: 2em; color: #888;">chat gpt - hebish</p>
   </div>
 
   <script>
     let provider, signer, contract;
-
-    const contractAddress = "YOUR_CONTRACT_ADDRESS_HERE";
+    const contractAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
     const abi = [
       "function getStatus() public view returns (string)",
       "function setStatus(string calldata _status) public",
@@ -69,31 +74,19 @@
     }
 
     async function loadInfo() {
-      const status = await contract.getStatus();
-      document.getElementById("status").innerText = status;
-    }
-
-    async function setStatus(status) {
       try {
-        const tx = await contract.setStatus(status);
-        await tx.wait();
-        alert("Status updated to " + status);
-        loadInfo();
+        const status = await contract.getStatus();
+        document.getElementById("status").innerText = status;
       } catch (err) {
-        alert("Error: " + err.message);
+        console.error("Error loading status:", err);
+        document.getElementById("status").innerText = "Unavailable";
       }
     }
 
-    async function forwardStatus() {
-      const target = document.getElementById("targetContract").value;
-      if (!ethers.utils.isAddress(target)) return alert("Invalid address");
-      try {
-        const tx = await contract.forwardStatus(target);
-        await tx.wait();
-        alert("Status forwarded!");
-      } catch (err) {
-        alert("Error: " + err.message);
-      }
+    function copyAddress() {
+      navigator.clipboard.writeText(contractAddress).then(() => {
+        alert("تم نسخ عنوان العقد بنجاح: " + contractAddress);
+      });
     }
 
     function sendEmail() {
