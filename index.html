@@ -2,42 +2,43 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="google-site-verification" content="google7f4fbd39717d3a1c.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>القالب الخارق الذكي - قوالب مبتكرة على شبكة BSC بسعر مناسب</title>
-  <!-- تحسين محركات البحث -->
-  <meta name="description" content="استمتع بقوالب ذكية مبتكرة على شبكة BSC بسعر مناسب. 0.10 BNB تمنحك قالب ذكي مثل محفظة مركزية وعقد NFT متكامل.">
-  <meta name="keywords" content="قوالب ذكية, BSC, NFT, محفظة مركزية, تطوير عقود ذكية, 0.10 BNB, hebish, ChatGPT">
-  <link rel="canonical" href="https://example.com/your-page-url">
+  <title>القالب الخارق الذكي</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 20px;
+      margin: 0;
+      padding: 0;
       background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
     .container {
+      width: 90%;
       max-width: 800px;
-      margin: 0 auto;
       background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
     }
-    button, .copy-btn {
-      display: inline-block;
+    .copy-btn, button {
       padding: 10px 20px;
       font-size: 16px;
-      margin: 10px;
+      margin: 10px 5px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      background-color: #007aff;
-      color: #fff;
-      text-decoration: none;
     }
     .copy-btn {
       background-color: #28a745;
+      color: #fff;
+    }
+    button {
+      background-color: #007aff;
+      color: #fff;
     }
     .status {
       margin-top: 15px;
@@ -53,11 +54,6 @@
       text-align: right;
       direction: rtl;
     }
-    .footer-note {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #999;
-    }
     pre {
       text-align: left;
       direction: ltr;
@@ -66,92 +62,31 @@
       border-radius: 5px;
       overflow-x: auto;
     }
+    .footer-note {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #999;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>القالب الخارق الذكي</h1>
     <p>كل 0.10 BNB تمنحك قالب ذكي بسعر مناسب!</p>
-    
-    <!-- زر لنسخ عنوان المحفظة -->
-    <button class="copy-btn" id="copyWalletBtn" style="display:none;" onclick="copyWalletLink()">نسخ عنوان المحفظة: 0x61916c290c837cd1fe283dcf56801bc3a16f7b6f</button>
-    
-    <!-- خطوات تأكيد الدفع عبر البريد الإلكتروني -->
-    <button id="emailBtn" onclick="openEmail()">تأكيد الدفع عن طريق البريد الإلكتروني</button>
+
+    <!-- زر نسخ عنوان المحفظة -->
+    <button class="copy-btn" onclick="copyWalletAddress()">نسخ عنوان المحفظة: 0x61916c290c837cd1fe283dcf56801bc3a16f7b6f</button>
+
+    <!-- زر إرسال بريد -->
+    <button onclick="openEmail()">تأكيد الدفع عن طريق البريد الإلكتروني</button>
+
+    <!-- زر تأكيد الدفع -->
     <button id="confirmBtn" style="display:none;" onclick="confirmPayment()">تم تأكيد الدفع</button>
-    
-    <!-- منطقة عرض القوالب -->
+
+    <!-- عرض القوالب بعد التأكيد -->
     <div class="template-box" id="templateArea" style="display:none;">
       <h3>القالب 1: محفظة مركزية BSC</h3>
       <p>هذا العقد الذكي يقوم بجمع أي تبرعات تُرسل إليه، ثم يحولها مباشرةً إلى محفظة مركزية تعمل على شبكة BSC.</p>
       <pre>
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
-contract DonationCollector {
-    // تحديد المحفظة المركزية باستخدام العنوان المعطى
-    address payable public centralWallet = payable(0x61916c290c837cd1fe283dcf56801bc3a16f7b6f);
-
-    receive() external payable {
-        centralWallet.transfer(msg.value);
-    }
-}
-      </pre>
-      <hr>
-      <h3>القالب 2: NFT تعمل على BSC</h3>
-      <p>عقد يقوم بإنشاء NFT واحدة تلقائيًا عند النشر وإرسالها إلى محفظة الأدمن. يعتمد على OpenZeppelin ويُستخدم لتكريم المتبرعين أو إنشاء رموز NFT فريدة.</p>
-      <pre>
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-contract DonationNFT is ERC721URIStorage, Ownable {
-    uint256 public tokenCounter;
-    string public defaultTokenURI;
-    address public adminWallet;
-    constructor(address _adminWallet, string memory _defaultTokenURI) ERC721("DonationNFT", "DNFT") {
-        adminWallet = _adminWallet;
-        defaultTokenURI = _defaultTokenURI;
-        tokenCounter = 0;
-        _safeMint(adminWallet, tokenCounter);
-        _setTokenURI(tokenCounter, defaultTokenURI);
-        tokenCounter++;
-    }
-}
-      </pre>
-    </div>
-    <div class="status" id="statusMsg"></div>
-    <div class="footer-note">hebish & ChatGPT</div>
-  </div>
-  <script>
-    // دالة لفتح البريد الإلكتروني باستخدام mailto link
-    function openEmail() {
-      const email = "hebishpartner@gmail.com";
-      const subject = encodeURIComponent("أكد الدفع");
-      const body = encodeURIComponent("ملاحظة: كتابة رسالة أكد الدفع عن طريق البريد الإلكتروني");
-      const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
-      
-      window.open(mailtoLink, "_blank");
-      
-      // عرض زر تأكيد الدفع بعد فتح البريد الإلكتروني
-      document.getElementById('confirmBtn').style.display = 'inline-block';
-      document.getElementById('statusMsg').innerText = "يرجى إرسال البريد الإلكتروني، ثم اضغط على 'تم تأكيد الدفع'.";
-    }
-    // دالة لإظهار القوالب وزر نسخ عنوان المحفظة عند تأكيد الدفع
-    function confirmPayment() {
-      document.getElementById('statusMsg').innerText = "شكرًا لتأكيد الدفع! ستظهر القوالب وزر نسخ عنوان المحفظة الآن.";
-      document.getElementById('templateArea').style.display = 'block';
-      document.getElementById('copyWalletBtn').style.display = 'inline-block';
-    }
-    // دالة لنسخ عنوان المحفظة إلى الحافظة
-    function copyWalletLink() {
-      const walletAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
-      navigator.clipboard.writeText(walletAddress).then(function() {
-        document.getElementById('statusMsg').innerText = "تم نسخ عنوان المحفظة إلى الحافظة!";
-      }).catch(function() {
-        document.getElementById('statusMsg').innerText = "حدث خطأ أثناء نسخ العنوان.";
-      });
-    }
-  </script>
-</body>
-</html>
+pragma solidity ^
