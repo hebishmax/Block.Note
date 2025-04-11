@@ -36,21 +36,9 @@
     <input type="text" id="targetContract" placeholder="Target contract address">
     <button onclick="forwardStatus()">Forward Status</button>
 
-    <p>
-      <strong>Owner:</strong> 
-      <span id="owner">Loading...</span>
-      <button onclick="copyWallet()" style="margin-left: 10px;">Copy</button>
-    </p>
-
     <hr />
 
     <h3>Project Support</h3>
-
-    <p>
-      <strong>Project Wallet:</strong> 
-      <span id="projectWallet">0x61916c290c837cd1fe283dcf56801bc3a16f7b6f</span>
-      <button onclick="copyProjectWallet()">Copy</button>
-    </p>
 
     <p>
       <button onclick="sendEmail()">Contact via Email</button>
@@ -82,9 +70,7 @@
 
     async function loadInfo() {
       const status = await contract.getStatus();
-      const owner = await contract.owner();
       document.getElementById("status").innerText = status;
-      document.getElementById("owner").innerText = owner;
     }
 
     async function setStatus(status) {
@@ -108,24 +94,6 @@
       } catch (err) {
         alert("Error: " + err.message);
       }
-    }
-
-    function copyWallet() {
-      const wallet = document.getElementById("owner").innerText;
-      navigator.clipboard.writeText(wallet).then(() => {
-        alert("Copied owner: " + wallet);
-      }).catch(err => {
-        alert("Failed to copy: " + err);
-      });
-    }
-
-    function copyProjectWallet() {
-      const wallet = document.getElementById("projectWallet").innerText;
-      navigator.clipboard.writeText(wallet).then(() => {
-        alert("Copied Project Wallet: " + wallet);
-      }).catch(err => {
-        alert("Failed to copy wallet: " + err);
-      });
     }
 
     function sendEmail() {
