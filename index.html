@@ -1,97 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SmartRelay UI</title>
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <style>
-    body { font-family: sans-serif; padding: 2em; background: #f5f5f5; }
-    .card {
-      background: white; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 500px; margin: auto;
-    }
-    input, button { padding: 0.5em; margin: 0.5em 0; width: 100%; font-size: 1em; }
-    .status { font-size: 2em; margin: 1em 0; }
-    hr { margin: 20px 0; }
-    h3 { margin-top: 1.5em; }
-    @media (max-width: 600px) {
-      body { padding: 1em; }
-      .card { padding: 1.5em; }
-      .status { font-size: 1.5em; }
-      button, input { font-size: 1em; }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Silver Token - أول وحدة رقمية ذكية</title>
+  <meta name="description" content="اكتشف مشروع Silver Token: وحدة رقمية تساوي 5 USDT، مع دعم عبر البريد الإلكتروني بدون الحاجة إلى ربط MetaMask.">
+  <meta name="keywords" content="Silver Token, توكن ذكي, وحدة رقمية, BSC Testnet, بدون MetaMask, smart contract">
+  <meta name="author" content="silverhelparab">
+  <link rel="icon" href="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" type="image/png">
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 2em; background: #f5f5f5; direction: rtl; }
+    .card {
+      background: white; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 500px; margin: auto;
+    }
+    input, button { padding: 0.5em; margin: 0.5em 0; width: 100%; font-size: 1em; }
+    .status { font-size: 2em; margin: 1em 0; color: #333; }
+    hr { margin: 20px 0; }
+    h3 { margin-top: 1.5em; }
+    @media (max-width: 600px) {
+      body { padding: 1em; }
+      .card { padding: 1.5em; }
+      .status { font-size: 1.5em; }
+      button, input { font-size: 1em; }
+    }
+  </style>
 </head>
-<body onload="connect()">
-  <div class="card">
-    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" 
-         alt="Silver Token Logo" 
-         style="width: 100%; max-height: 200px; object-fit: contain; margin-bottom: 1em; border-radius: 10px;" />
+<body>
+  <div class="card">
+    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" 
+         alt="شعار Silver Token" 
+         style="width: 100%; max-height: 200px; object-fit: contain; margin-bottom: 1em; border-radius: 10px;" />
+    <h2 style="text-align: center; color: #444;">الوحدة الرقمية = 5 USDT</h2>
+    
+    <p><strong>الحالة الحالية:</strong> <span id="status" class="status">...</span></p>
+    <button onclick="copyAddress()">نسخ عنوان العقد</button>
+    <small>ملاحظة: يمكنك إرسال التوكن إلى هذا العنوان مباشرة.</small>
+    <hr />
+    <h3>الدعم الفني</h3>
+    <p>
+      <button onclick="sendEmail()">تواصل عبر البريد الإلكتروني</button>
+      <small>
+        <ul>
+          <li>استلم وحدتك الرقمية عبر الإيميل</li>
+          <li>أول رمز غير قابل للاستبدال في العالم</li>
+        </ul>
+      </small>
+    </p>
+    <p style="text-align: center; margin-top: 2em; color: #888;">chat gpt - hebish</p>
+  </div>
+  <script>
+    let provider, contract;
+    const contractAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
+    const abi = [
+      "function getStatus() public view returns (string)",
+      "function setStatus(string calldata _status) public",
+      "function forwardStatus(address targetContract) public",
+      "function owner() public view returns (address)"
+    ];
 
-    <h2 style="text-align: center; color: #444;">Digital unit = 5 usdt</h2>
-    
-    <p><strong>Current Status:</strong> <span id="status" class="status">?</span></p>
+    provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
+    contract = new ethers.Contract(contractAddress, abi, provider);
+    loadInfo();
 
-    <button onclick="copyAddress()">نسخ عنوان المحفظة</button>
-    <small>ملاحظة: أرسل عبر محفظتك MetaMask إلى هذا العنوان.</small>
+    async function loadInfo() {
+      try {
+        const status = await contract.getStatus();
+        document.getElementById("status").innerText = status;
+      } catch (err) {
+        console.error("خطأ أثناء جلب الحالة:", err);
+        document.getElementById("status").innerText = "غير متوفرة";
+      }
+    }
 
-    <hr />
-    <h3>Project Support</h3>
-    <p>
-      <button onclick="sendEmail()">Contact via Email</button>
-      <small>
-        <ul>
-          <li>استلم الوحدة الرقمية عبر البريد الالكتروني</li>
-          <li>اول رمز غير قابل للاستبدال في العالم</li>
-        </ul>
-      </small>
-    </p>
+    function copyAddress() {
+      navigator.clipboard.writeText(contractAddress).then(() => {
+        alert("تم نسخ عنوان العقد: " + contractAddress);
+      });
+    }
 
-    <p style="text-align: center; margin-top: 2em; color: #888;">chat gpt - hebish</p>
-  </div>
-
-  <script>
-    let provider, signer, contract;
-    const contractAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
-    const abi = [
-      "function getStatus() public view returns (string)",
-      "function setStatus(string calldata _status) public",
-      "function forwardStatus(address targetContract) public",
-      "function owner() public view returns (address)"
-    ];
-
-    async function connect() {
-      if (window.ethereum) {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        provider = new ethers.providers.Web3Provider(window.ethereum);
-        signer = provider.getSigner();
-        contract = new ethers.Contract(contractAddress, abi, signer);
-        loadInfo();
-      } else {
-        alert("MetaMask not found!");
-      }
-    }
-
-    async function loadInfo() {
-      try {
-        const status = await contract.getStatus();
-        document.getElementById("status").innerText = status;
-      } catch (err) {
-        console.error("Error loading status:", err);
-        document.getElementById("status").innerText = "Unavailable";
-      }
-    }
-
-    function copyAddress() {
-      navigator.clipboard.writeText(contractAddress).then(() => {
-        alert("تم نسخ عنوان العقد بنجاح: " + contractAddress);
-      });
-    }
-
-    function sendEmail() {
-      window.location.href = "mailto:hebishpartner@gmail.com?subject=SmartRelay%20Support";
-    }
-  </script>
+    function sendEmail() {
+      window.location.href = "mailto:hebishpartner@gmail.com?subject=SmartRelay%20Support";
+    }
+  </script>
 </body>
 </html>
