@@ -10,69 +10,61 @@
   <meta name="keywords" content="قوالب ذكية, BSC, NFT, محفظة مركزية, تطوير عقود ذكية, 0.10 BNB, hebish, ChatGPT">
   <link rel="canonical" href="https://example.com/your-page-url">
   <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      text-align: center; 
-      margin: 20px; 
-      background: #f4f4f9; 
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+      background: #f4f4f9;
     }
-    .container { 
-      max-width: 800px; 
-      margin: 0 auto; 
-      background: #fff; 
-      padding: 20px; 
-      border-radius: 8px; 
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    /* زر محفظة الدفع المستقل: الرابط فارغ والنص يحتوي على العنوان */
-    .empty-link-btn {
+    button, .copy-btn {
       display: inline-block;
       padding: 10px 20px;
       font-size: 16px;
       margin: 10px;
       border: none;
       border-radius: 5px;
-      background-color: #28a745;
+      cursor: pointer;
+      background-color: #007aff;
       color: #fff;
       text-decoration: none;
-      cursor: default;
     }
-    button { 
-      padding: 10px 20px; 
-      font-size: 16px; 
-      margin: 10px; 
-      border: none; 
-      border-radius: 5px; 
-      cursor: pointer; 
-      background-color: #007aff; 
-      color: #fff; 
+    .copy-btn {
+      background-color: #28a745;
     }
-    .status { 
-      margin-top: 15px; 
-      font-size: 18px; 
-      color: green; 
+    .status {
+      margin-top: 15px;
+      font-size: 18px;
+      color: green;
     }
-    .template-box { 
-      margin-top: 20px; 
-      border: 2px dashed #aaa; 
-      padding: 15px; 
-      border-radius: 10px; 
-      background: #f9f9f9; 
-      text-align: right; 
-      direction: rtl; 
+    .template-box {
+      margin-top: 20px;
+      border: 2px dashed #aaa;
+      padding: 15px;
+      border-radius: 10px;
+      background: #f9f9f9;
+      text-align: right;
+      direction: rtl;
     }
-    .footer-note { 
-      margin-top: 30px; 
-      font-size: 14px; 
-      color: #999; 
+    .footer-note {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #999;
     }
-    pre { 
-      text-align: left; 
-      direction: ltr; 
-      background: #eee; 
-      padding: 10px; 
-      border-radius: 5px; 
-      overflow-x: auto; 
+    pre {
+      text-align: left;
+      direction: ltr;
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
     }
   </style>
 </head>
@@ -81,15 +73,12 @@
     <h1>القالب الخارق الذكي</h1>
     <p>كل 0.10 BNB تمنحك قالب ذكي بسعر مناسب!</p>
     
-    <!-- زر "محفظة الدفع" المستقل بالقيمة المحددة ورابط فارغ -->
-    <a href="" class="empty-link-btn">محفظة الدفع: 0x61916c290c837cd1fe283dcf56801bc3a16f7b6f</a>
+    <!-- زر لنسخ عنوان المحفظة -->
+    <button class="copy-btn" id="copyWalletBtn" style="display:none;" onclick="copyWalletLink()">نسخ عنوان المحفظة: 0x61916c290c837cd1fe283dcf56801bc3a16f7b6f</button>
     
     <!-- خطوات تأكيد الدفع عبر البريد الإلكتروني -->
     <button id="emailBtn" onclick="openEmail()">تأكيد الدفع عن طريق البريد الإلكتروني</button>
     <button id="confirmBtn" style="display:none;" onclick="confirmPayment()">تم تأكيد الدفع</button>
-    
-    <!-- زر لنسخ رابط الدفع الخاص بالقالب؛ سيتم نسخ نص فارغ -->
-    <button id="copyWalletBtn" style="display:none;" onclick="copyWalletLink()">نسخ رابط الدفع (MetaMask)</button>
     
     <!-- منطقة عرض القوالب -->
     <div class="template-box" id="templateArea" style="display:none;">
@@ -100,7 +89,7 @@
 pragma solidity ^0.8.0;
 
 contract DonationCollector {
-    // هنا تبقى قيمة المحفظة كما في العقد الأصلي
+    // تحديد المحفظة المركزية باستخدام العنوان المعطى
     address payable public centralWallet = payable(0x61916c290c837cd1fe283dcf56801bc3a16f7b6f);
 
     receive() external payable {
@@ -108,28 +97,22 @@ contract DonationCollector {
     }
 }
       </pre>
-
       <hr>
-
       <h3>القالب 2: NFT تعمل على BSC</h3>
       <p>عقد يقوم بإنشاء NFT واحدة تلقائيًا عند النشر وإرسالها إلى محفظة الأدمن. يعتمد على OpenZeppelin ويُستخدم لتكريم المتبرعين أو إنشاء رموز NFT فريدة.</p>
       <pre>
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-
 contract DonationNFT is ERC721URIStorage, Ownable {
     uint256 public tokenCounter;
     string public defaultTokenURI;
     address public adminWallet;
-
     constructor(address _adminWallet, string memory _defaultTokenURI) ERC721("DonationNFT", "DNFT") {
         adminWallet = _adminWallet;
         defaultTokenURI = _defaultTokenURI;
         tokenCounter = 0;
-
         _safeMint(adminWallet, tokenCounter);
         _setTokenURI(tokenCounter, defaultTokenURI);
         tokenCounter++;
@@ -137,11 +120,9 @@ contract DonationNFT is ERC721URIStorage, Ownable {
 }
       </pre>
     </div>
-
     <div class="status" id="statusMsg"></div>
     <div class="footer-note">hebish & ChatGPT</div>
   </div>
-
   <script>
     // دالة لفتح البريد الإلكتروني باستخدام mailto link
     function openEmail() {
@@ -156,20 +137,19 @@ contract DonationNFT is ERC721URIStorage, Ownable {
       document.getElementById('confirmBtn').style.display = 'inline-block';
       document.getElementById('statusMsg').innerText = "يرجى إرسال البريد الإلكتروني، ثم اضغط على 'تم تأكيد الدفع'.";
     }
-
-    // دالة لإظهار القوالب وزر نسخ رابط الدفع عند تأكيد الدفع
+    // دالة لإظهار القوالب وزر نسخ عنوان المحفظة عند تأكيد الدفع
     function confirmPayment() {
-      document.getElementById('statusMsg').innerText = "شكرًا لتأكيد الدفع! ستظهر القوالب وزر نسخ رابط الدفع الآن.";
+      document.getElementById('statusMsg').innerText = "شكرًا لتأكيد الدفع! ستظهر القوالب وزر نسخ عنوان المحفظة الآن.";
       document.getElementById('templateArea').style.display = 'block';
       document.getElementById('copyWalletBtn').style.display = 'inline-block';
     }
-
-    // دالة لنسخ رابط الدفع الخاص بالقالب؛ يتم نسخ نص فارغ (لأن الرابط داخل القالب مطلوب أن يكون فارغاً)
+    // دالة لنسخ عنوان المحفظة إلى الحافظة
     function copyWalletLink() {
-      navigator.clipboard.writeText("").then(function() {
-        document.getElementById('statusMsg').innerText = "تم نسخ (قيمة فارغة) من رابط الدفع إلى الحافظة!";
+      const walletAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
+      navigator.clipboard.writeText(walletAddress).then(function() {
+        document.getElementById('statusMsg').innerText = "تم نسخ عنوان المحفظة إلى الحافظة!";
       }).catch(function() {
-        document.getElementById('statusMsg').innerText = "حدث خطأ أثناء نسخ الرابط.";
+        document.getElementById('statusMsg').innerText = "حدث خطأ أثناء نسخ العنوان.";
       });
     }
   </script>
