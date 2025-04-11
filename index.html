@@ -42,14 +42,6 @@
     hr {
       margin: 20px 0;
     }
-    .lang-btn {
-      text-align: center;
-      margin-top: 1em;
-    }
-    .lang-btn button {
-      width: auto;
-      padding: 0.3em 1em;
-    }
     footer {
       text-align: center;
       margin-top: 2em;
@@ -103,10 +95,6 @@
       </small>
     </p>
 
-    <div class="lang-btn">
-      <button onclick="switchLang()">Switch to Arabic</button>
-    </div>
-
     <footer>
       chat gpt - hebish
       <br />
@@ -116,12 +104,6 @@
 
   <script>
     const contractAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
-    const abi = [
-      "function getStatus() public view returns (string)",
-      "function setStatus(string calldata _status) public",
-      "function forwardStatus(address targetContract) public",
-      "function owner() public view returns (address)"
-    ];
 
     function loadInfo() {
       document.getElementById("status").innerText = "Available";
@@ -135,10 +117,6 @@
 
     function sendEmail() {
       window.location.href = "mailto:hebishpartner@gmail.com?subject=SmartRelay%20Support";
-    }
-
-    function switchLang() {
-      window.location.href = "arabic-version.html";
     }
   </script>
 </body>
