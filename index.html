@@ -1,211 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Silver Token - The First Smart Digital Unit</title>
-  <meta name="description" content="Discover the Silver Token project: a digital unit worth 5 USDT, with support via email and no MetaMask connection required.">
-  <meta name="keywords" content="Silver Token, smart token, digital unit, BSC Testnet, no MetaMask, smart contract">
-  <meta name="author" content="silverhelparab">
-  <meta name="google-site-verification" content="google7f4fbd39717d3a1c.html">
-  <link rel="icon" href="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" type="image/png">
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 1em;
-      background: #f5f5f5;
-      margin: 0;
-    }
-    .card {
-      background: white;
-      padding: 1.5em;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 500px;
-      margin: auto;
-    }
-    img {
-      width: 100%;
-      max-height: 200px;
-      object-fit: contain;
-      margin-bottom: 1em;
-      border-radius: 10px;
-    }
-    input, button {
-      padding: 0.8em;
-      margin: 0.5em 0;
-      width: 100%;
-      font-size: 1em;
-      border-radius: 8px;
-      border: none;
-      background: #444;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #666;
-    }
-    .status {
-      font-size: 1.8em;
-      margin: 1em 0;
-      color: green;
-      text-align: center;
-    }
-    hr {
-      margin: 20px 0;
-    }
-    h3 {
-      margin-top: 1.5em;
-      color: #333;
-    }
-    ul {
-      padding-left: 20px;
-      color: #555;
-    }
-    .lang-switch {
-      text-align: right;
-      margin-bottom: 1em;
-    }
-    .lang-switch button {
-      width: auto;
-      padding: 0.4em 1em;
-    }
-    .footer {
-      text-align: center;
-      margin-top: 2em;
-      color: #888;
-      font-size: 0.9em;
-    }
-    .footer a {
-      color: #555;
-      text-decoration: none;
-    }
-    .footer a:hover {
-      text-decoration: underline;
-    }
-    @media (max-width: 600px) {
-      .card {
-        padding: 1em;
-      }
-      .status {
-        font-size: 1.4em;
-      }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="google-site-verification" content="google7f4fbd39717d3a1c.html" />
+  <title>SmartRelay UI</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1em;
+      background: #f5f5f5;
+      zoom: 0.95;
+    }
+    .card {
+      background: white;
+      padding: 1.5em;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: auto;
+    }
+    input, button {
+      padding: 0.5em;
+      margin: 0.5em 0;
+      width: 100%;
+      font-size: 1em;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .status {
+      font-size: 1.5em;
+      margin: 1em 0;
+      color: #333;
+      text-align: center;
+    }
+    h2, h3 {
+      text-align: center;
+      color: #444;
+    }
+    hr {
+      margin: 20px 0;
+    }
+    .lang-btn {
+      text-align: center;
+      margin-top: 1em;
+    }
+    .lang-btn button {
+      width: auto;
+      padding: 0.3em 1em;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2em;
+      color: #888;
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Silver Token",
+    "description": "Digital unit equal to 5 USDT on BSC Testnet.",
+    "brand": {
+      "@type": "Organization",
+      "name": "silverhelparab"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "price": "5",
+      "availability": "https://schema.org/InStock"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://v0-silver-nine.vercel.app/"
+    }
+  }
+  </script>
 </head>
-<body>
-  <div class="card">
-    <div class="lang-switch">
-      <button onclick="switchLang()">AR / EN</button>
-    </div>
-    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" alt="Silver Token Logo" />
-    <h2 id="unit-label" style="text-align: center; color: #444;">Digital Unit = 5 USDT</h2>
-    <p><strong id="status-label">Current Status:</strong></p>
-    <div id="status" class="status">Available</div>
-    <button onclick="copyAddress()" id="copy-btn">Copy Contract Address</button>
-    <small id="note-text">Note: You can send the token directly to this contract address.</small>
-    <hr />
-    <h3 id="support-title">Project Support</h3>
-    <p>
-      <button onclick="sendEmail()" id="email-btn">Contact via Email</button>
-      <small>
-        <ul>
-          <li id="email-li-1">Receive your digital unit via email</li>
-          <li id="email-li-2">The world's first non-fungible code</li>
-        </ul>
-      </small>
-    </p>
-    <div class="footer">
-      <p>chat gpt - hebish</p>
-      <a href="https://www.facebook.com/mohamedhebishfacebook?mibextid=ZbWKwL" target="_blank">Facebook Profile</a>
-    </div>
-  </div>
+<body onload="loadInfo()">
+  <div class="card">
+    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" 
+         alt="Silver Token Logo" 
+         style="width: 100%; max-height: 200px; object-fit: contain; margin-bottom: 1em; border-radius: 10px;" />
 
-  <script>
-    let currentLang = "en";
+    <h2>Digital unit = 5 USDT</h2>
 
-    const translations = {
-      en: {
-        unit: "Digital Unit = 5 USDT",
-        status: "Current Status:",
-        copy: "Copy Contract Address",
-        note: "Note: You can send the token directly to this contract address.",
-        support: "Project Support",
-        email: "Contact via Email",
-        li1: "Receive your digital unit via email",
-        li2: "The world's first non-fungible code"
-      },
-      ar: {
-        unit: "الوحدة الرقمية = ٥ دولار رقمي",
-        status: "الحالة الحالية:",
-        copy: "نسخ عنوان العقد",
-        note: "ملاحظة: يمكنك إرسال التوكن مباشرة إلى هذا العنوان.",
-        support: "دعم المشروع",
-        email: "تواصل عبر البريد الإلكتروني",
-        li1: "استلم وحدتك الرقمية عبر البريد الإلكتروني",
-        li2: "أول كود غير قابل للاستبدال في العالم"
-      }
-    };
+    <p><strong>Current Status:</strong> <span id="status" class="status">Available</span></p>
+    <button onclick="copyAddress()">Copy Contract Address</button>
+    <small>Note: Send via your MetaMask wallet to this address.</small>
 
-    function switchLang() {
-      currentLang = currentLang === "en" ? "ar" : "en";
-      applyLang();
-    }
+    <hr />
+    <h3>Project Support</h3>
+    <p>
+      <button onclick="sendEmail()">Contact via Email</button>
+      <small>
+        <ul>
+          <li>Receive the digital unit via email</li>
+          <li>The world's first non-fungible digital token</li>
+        </ul>
+      </small>
+    </p>
 
-    function applyLang() {
-      const t = translations[currentLang];
-      document.getElementById("unit-label").innerText = t.unit;
-      document.getElementById("status-label").innerText = t.status;
-      document.getElementById("copy-btn").innerText = t.copy;
-      document.getElementById("note-text").innerText = t.note;
-      document.getElementById("support-title").innerText = t.support;
-      document.getElementById("email-btn").innerText = t.email;
-      document.getElementById("email-li-1").innerText = t.li1;
-      document.getElementById("email-li-2").innerText = t.li2;
-    }
+    <div class="lang-btn">
+      <button onclick="switchLang()">Switch to Arabic</button>
+    </div>
 
-    function detectLang() {
-      const lang = navigator.language || navigator.userLanguage;
-      currentLang = lang.startsWith("ar") ? "ar" : "en";
-      applyLang();
-    }
+    <footer>
+      chat gpt - hebish
+      <br />
+      <a href="https://www.facebook.com/mohamedhebishfacebook?mibextid=ZbWKwL" style="font-size: 0.8em; color: #aaa;">Google Verification Link</a>
+    </footer>
+  </div>
 
-    const contractAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
-    const abi = [
-      "function getStatus() public view returns (string)",
-      "function setStatus(string calldata _status) public",
-      "function forwardStatus(address targetContract) public",
-      "function owner() public view returns (address)"
-    ];
+  <script>
+    const contractAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
+    const abi = [
+      "function getStatus() public view returns (string)",
+      "function setStatus(string calldata _status) public",
+      "function forwardStatus(address targetContract) public",
+      "function owner() public view returns (address)"
+    ];
 
-    const provider = new ethers.providers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
-    const contract = new ethers.Contract(contractAddress, abi, provider);
+    function loadInfo() {
+      document.getElementById("status").innerText = "Available";
+    }
 
-    async function loadInfo() {
-      try {
-        const status = await contract.getStatus();
-        document.getElementById("status").innerText = status || "Available";
-      } catch (err) {
-        console.error("Error loading status:", err);
-        document.getElementById("status").innerText = "Unavailable";
-      }
-    }
+    function copyAddress() {
+      navigator.clipboard.writeText(contractAddress).then(() => {
+        alert("Contract address copied successfully: " + contractAddress);
+      });
+    }
 
-    function copyAddress() {
-      navigator.clipboard.writeText(contractAddress).then(() => {
-        alert("Contract address copied: " + contractAddress);
-      });
-    }
+    function sendEmail() {
+      window.location.href = "mailto:hebishpartner@gmail.com?subject=SmartRelay%20Support";
+    }
 
-    function sendEmail() {
-      window.location.href = "mailto:hebishpartner@gmail.com?subject=SmartRelay%20Support";
-    }
-
-    window.onload = function() {
-      detectLang();
-      loadInfo();
-    };
-  </script>
+    function switchLang() {
+      window.location.href = "arabic-version.html";
+    }
+  </script>
 </body>
 </html>
