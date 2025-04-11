@@ -1,92 +1,123 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>القالب الخارق الذكي</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="google-site-verification" content="google7f4fbd39717d3a1c.html" />
+  <title>SmartRelay UI</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f4f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      font-family: sans-serif;
+      padding: 1em;
+      background: #f5f5f5;
+      zoom: 0.95;
     }
-    .container {
-      width: 90%;
-      max-width: 800px;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      text-align: center;
+    .card {
+      background: white;
+      padding: 1.5em;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: auto;
     }
-    .copy-btn, button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin: 10px 5px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .copy-btn {
-      background-color: #28a745;
-      color: #fff;
-    }
-    button {
-      background-color: #007aff;
-      color: #fff;
+    input, button {
+      padding: 0.5em;
+      margin: 0.5em 0;
+      width: 100%;
+      font-size: 1em;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
     .status {
-      margin-top: 15px;
-      font-size: 18px;
-      color: green;
+      font-size: 1.5em;
+      margin: 1em 0;
+      color: #333;
+      text-align: center;
     }
-    .template-box {
-      margin-top: 20px;
-      border: 2px dashed #aaa;
-      padding: 15px;
-      border-radius: 10px;
-      background: #f9f9f9;
-      text-align: right;
-      direction: rtl;
+    h2, h3 {
+      text-align: center;
+      color: #444;
     }
-    pre {
-      text-align: left;
-      direction: ltr;
-      background: #eee;
-      padding: 10px;
-      border-radius: 5px;
-      overflow-x: auto;
+    hr {
+      margin: 20px 0;
     }
-    .footer-note {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #999;
+    footer {
+      text-align: center;
+      margin-top: 2em;
+      color: #888;
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Silver Token",
+    "description": "Digital unit equal to 5 USDT on BSC Testnet.",
+    "brand": {
+      "@type": "Organization",
+      "name": "silverhelparab"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "price": "5",
+      "availability": "https://schema.org/InStock"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://v0-silver-nine.vercel.app/"
+    }
+  }
+  </script>
 </head>
-<body>
-  <div class="container">
-    <h1>القالب الخارق الذكي</h1>
-    <p>كل 0.10 BNB تمنحك قالب ذكي بسعر مناسب!</p>
+<body onload="loadInfo()">
+  <div class="card">
+    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute" 
+         alt="Silver Token Logo" 
+         style="width: 100%; max-height: 200px; object-fit: contain; margin-bottom: 1em; border-radius: 10px;" />
 
-    <!-- زر نسخ عنوان المحفظة -->
-    <button class="copy-btn" onclick="copyWalletAddress()">نسخ عنوان المحفظة: 0x61916c290c837cd1fe283dcf56801bc3a16f7b6f</button>
+    <h2>Digital unit = 5 USDT</h2>
 
-    <!-- زر إرسال بريد -->
-    <button onclick="openEmail()">تأكيد الدفع عن طريق البريد الإلكتروني</button>
+    <p><strong>Current Status:</strong> <span id="status" class="status">Available</span></p>
+    <button onclick="copyAddress()">Copy Contract Address</button>
+    <small>Note: Send via your MetaMask wallet to this address.</small>
 
-    <!-- زر تأكيد الدفع -->
-    <button id="confirmBtn" style="display:none;" onclick="confirmPayment()">تم تأكيد الدفع</button>
+    <hr />
+    <h3>Project Support</h3>
+    <p>
+      <button onclick="sendEmail()">Contact via Email</button>
+      <small>
+        <ul>
+          <li>Receive the digital unit via email</li>
+          <li>The world's first non-fungible digital token</li>
+        </ul>
+      </small>
+    </p>
 
-    <!-- عرض القوالب بعد التأكيد -->
-    <div class="template-box" id="templateArea" style="display:none;">
-      <h3>القالب 1: محفظة مركزية BSC</h3>
-      <p>هذا العقد الذكي يقوم بجمع أي تبرعات تُرسل إليه، ثم يحولها مباشرةً إلى محفظة مركزية تعمل على شبكة BSC.</p>
-      <pre>
-// SPDX-License-Identifier: MIT
-pragma solidity ^
+    <footer>
+      chat gpt - hebish
+      <br />
+      <a href="https://www.facebook.com/mohamedhebishfacebook?mibextid=ZbWKwL" style="font-size: 0.8em; color: #aaa;">Google Verification Link</a>
+    </footer>
+  </div>
+
+  <script>
+    const contractAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
+
+    function loadInfo() {
+      document.getElementById("status").innerText = "Available";
+    }
+
+    function copyAddress() {
+      navigator.clipboard.writeText(contractAddress).then(() => {
+        alert("Contract address copied successfully: " + contractAddress);
+      });
+    }
+
+    function sendEmail() {
+      window.location.href = "mailto:hebishpartner@gmail.com?subject=SmartRelay%20Support";
+    }
+  </script>
+</body>
+</html>
