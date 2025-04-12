@@ -1,133 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-site-verification" content="google7f4fbd39717d3a1c.html" />
-  <link rel="publisher" href="https://www.facebook.com/mohamedhebishfacebook?mibextid=ZbWKwL" />
-  <title>SmartRelay UI</title>
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <style>
-    /* إزالة خصائص zoom لتكون الصفحة مناسبة لشاشات الموبايل */
-    body {
-      font-family: sans-serif;
-      padding: 1em;
-      background: #f5f5f5;
-      margin: 0;
-    }
-    .card {
-      background: white;
-      padding: 1.5em;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      max-width: 500px;
-      margin: 1em auto;
-    }
-    input, button {
-      padding: 0.5em;
-      margin: 0.5em 0;
-      width: 100%;
-      font-size: 1em;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-    .status {
-      font-size: 1.5em;
-      margin: 1em 0;
-      color: #333;
-      text-align: center;
-    }
-    h2, h3 {
-      text-align: center;
-      color: #444;
-    }
-    hr {
-      margin: 20px 0;
-    }
-    footer {
-      text-align: center;
-      margin-top: 2em;
-      color: #888;
-      font-size: 0.9em;
-    }
-    /* تحسين استجابة الموقع لشاشات الموبايل */
-    @media (max-width: 600px) {
-      .card {
-        padding: 1em;
-        margin: 0.5em;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      }
-      h2 {
-        font-size: 1.5em;
-      }
-      h3 {
-        font-size: 1.3em;
-      }
-      .status {
-        font-size: 1.3em;
-      }
-    }
-  </style>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "Silver Token",
-    "description": "Digital unit equal to 5 USDT on BSC Testnet.",
-    "brand": {
-      "@type": "Organization",
-      "name": "silverhelparab"
-    },
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": "USD",
-      "price": "5",
-      "availability": "https://schema.org/InStock"
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://v0-silver-nine.vercel.app/"
-    }
-  }
-  </script>
+  <meta charset="UTF-8" />
+  <!-- ضبط initial-scale إلى 0.8 لتصغير العرض على الموبايل -->
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, user-scalable=no" />
+  <meta name="google-site-verification" content="google7f4fbd39717d3a1c.html" />
+  <link rel="publisher" href="https://www.facebook.com/mohamedhebishfacebook?mibextid=ZbWKwL" />
+  <title>SmartRelay UI</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1em;
+      background: #f5f5f5;
+      margin: 0;
+    }
+    .card {
+      background: white;
+      padding: 1.5em;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: 1em auto;
+    }
+    input, button {
+      padding: 0.5em;
+      margin: 0.5em 0;
+      width: 100%;
+      font-size: 1em;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .status {
+      font-size: 1.5em;
+      margin: 1em 0;
+      color: #333;
+      text-align: center;
+    }
+    h2, h3 {
+      text-align: center;
+      color: #444;
+    }
+    hr {
+      margin: 20px 0;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2em;
+      color: #888;
+      font-size: 0.9em;
+    }
+    @media (max-width: 600px) {
+      .card {
+        padding: 1em;
+        margin: 0.5em;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      }
+      h2 {
+        font-size: 1.5em;
+      }
+      h3 {
+        font-size: 1.3em;
+      }
+      .status {
+        font-size: 1.3em;
+      }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Silver Token",
+    "description": "Digital unit equal to 5 USDT on BSC Testnet.",
+    "brand": {
+      "@type": "Organization",
+      "name": "silverhelparab"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "price": "5",
+      "availability": "https://schema.org/InStock"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://v0-silver-nine.vercel.app/"
+    }
+  }
+  </script>
 </head>
 <body onload="loadInfo()">
-  <div class="card">
-    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute"  
-         alt="Silver Token Logo" 
-         style="width: 100%; max-height: 200px; object-fit: contain; margin-bottom: 1em; border-radius: 10px;" />
-    <h2>Digital unit = 5 USDT</h2>
-    <p><strong>Current Status:</strong> <span id="status" class="status">Available</span></p>
-    <button onclick="copyAddress()">Copy Contract Address</button>
-    <small>Note: Send via your MetaMask wallet to this address.</small>
-    <hr />
-    <h3>Project Support</h3>
-    <p>
-      <button onclick="sendEmail()">Contact via Email</button>
-      <small>
-        <ul>
-          <li>Receive the digital unit via email</li>
-          <li>The world's first non-fungible digital token</li>
-        </ul>
-      </small>
-    </p>
-    <footer>
-      chat gpt - hebish
-    </footer>
-  </div>
-  <script>
-    const contractAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
-    function loadInfo() {
-      document.getElementById("status").innerText = "Available";
-    }
-    function copyAddress() {
-      navigator.clipboard.writeText(contractAddress).then(() => {
-        alert("Contract address copied successfully: " + contractAddress);
-      });
-    }
-    function sendEmail() {
-      window.location.href = "mailto:hebishpartner@gmail.com?subject=SmartRelay%20Support";
-    }
-  </script>
+  <div class="card">
+    <img src="https://ipfs.io/ipfs/bafkreidrdsuvvz272cpwhpmo6uacipbszakjplouwmuido37l5kwrf4ute"  
+         alt="Silver Token Logo"  
+         style="width: 100%; max-height: 200px; object-fit: contain; margin-bottom: 1em; border-radius: 10px;" />
+    <h2>Digital unit = 5 USDT</h2>
+    <p><strong>Current Status:</strong> <span id="status" class="status">Available</span></p>
+    <button onclick="copyAddress()">Copy Contract Address</button>
+    <small>Note: Send via your MetaMask wallet to this address.</small>
+    <hr />
+    <h3>Project Support</h3>
+    <p>
+      <button onclick="sendEmail()">Contact via Email</button>
+      <small>
+        <ul>
+          <li>Receive the digital unit via email</li>
+          <li>The world's first non-fungible digital token</li>
+        </ul>
+      </small>
+    </p>
+    <footer>
+      chat gpt - hebish
+    </footer>
+  </div>
+  <script>
+    const contractAddress = "0x61916c290c837cd1fe283dcf56801bc3a16f7b6f";
+    function loadInfo() {
+      document.getElementById("status").innerText = "Available";
+    }
+    function copyAddress() {
+      navigator.clipboard.writeText(contractAddress).then(() => {
+        alert("Contract address copied successfully: " + contractAddress);
+      });
+    }
+    function sendEmail() {
+      window.location.href = "mailto:hebishpartner@gmail.com?subject=SmartRelay%20Support";
+    }
+  </script>
 </body>
 </html>
