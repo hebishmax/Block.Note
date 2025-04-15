@@ -1,110 +1,129 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="الوحدة الرقمية: عملة الإنسان الذكي محدود الدخل، مشروع قائم على الكرامة، اللامركزية، والعدالة الرقمية.">
-  <meta name="keywords" content="الوحدة الرقمية, عملة رقمية, فضي, blockchain, عملة للفقراء, smart token, human dignity">
-  <meta name="author" content="شبكة فضي">
-  <meta name="google-site-verification" content="google7f4fbd39717d3a1c.html" />
-  <title>الوحدة الرقمية | Digital Unit</title>
+  <title>BlockNote - مدونة فكرية</title>
   <style>
     body {
+      background-color: #111;
+      color: #eee;
+      font-family: 'Courier New', Courier, monospace;
       margin: 0;
-      font-family: 'Cairo', sans-serif;
-      background: #f5f5f5;
-      color: #222;
+      padding: 0;
     }
     header {
-      background: #222;
-      color: #fff;
-      padding: 1.5rem;
+      background-color: #1a1a1a;
+      padding: 1rem;
       text-align: center;
+      border-bottom: 1px solid #333;
     }
-    section {
-      padding: 2rem;
-      max-width: 800px;
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    main {
+      padding: 1rem;
+      max-width: 600px;
       margin: auto;
     }
-    h1 {
-      color: #444;
-    }
-    .phase {
-      background: #fff;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin-bottom: 2rem;
-    }
-    footer {
-      background: #222;
-      color: #aaa;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-    }
-    .magic {
-      background: linear-gradient(to left, #00c6ff, #0072ff);
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      display: inline-block;
-      font-weight: bold;
-      margin-top: 1rem;
-    }
-    .buy-btn {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.75rem 1.25rem;
-      background-color: #0072ff;
-      color: white;
+    textarea {
+      width: 100%;
+      height: 100px;
+      background: #1f1f1f;
+      color: #eee;
       border: none;
       border-radius: 8px;
+      padding: 1rem;
       font-size: 1rem;
-      text-decoration: none;
-      transition: background 0.3s ease;
+      resize: none;
     }
-    .buy-btn:hover {
-      background-color: #0059c1;
+    button {
+      background: #333;
+      color: #eee;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    .post {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    .post .meta {
+      font-size: 0.8rem;
+      color: #999;
+      margin-bottom: 0.5rem;
+    }
+    .post .content {
+      font-size: 1rem;
+    }
+    .nav {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .nav a {
+      color: #0ff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin: 0 1rem;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>الوحدة الرقمية</h1>
-    <p>عملة من لا يُرى، ولا يُنسى</p>
-  </header>  <section>
-    <div class="phase">
-      <h2>المرحلة الأولى: الإطلاق الرمزي (الاجتماعي)</h2>
-      <ul>
-        <li>توزيع العملة على المؤهلين من أذكياء الحياة.</li>
-        <li>قائمة مبنية على معايير احتياج، مساهمة، وكرامة.</li>
-        <li>لا بيع، لا شروط، فقط اعتراف.</li>
-        <li>التوزيع سيتم يدوياً عبر دور الرعاية والمصحات المجتمعية.</li>
-      </ul>
-    </div><div class="phase">
-  <h2>المرحلة الثانية: الإطلاق السوقي (الاقتصادي)</h2>
-  <ul>
-    <li>فتح زوج تداول على BSC (مثل WDG/USDT).</li>
-    <li>واجهة شراء شفافة ومفتوحة لمن يريد الدعم.</li>
-    <li>العائد يُعاد توزيعه للمستحقين.</li>
-  </ul>
-  <a href="#" class="buy-btn">شراء الوحدة الرقمية (قريباً)</a>
-</div>
+    <h1>BlockNote - مدونة فكرية</h1>
+  </header>
+  <main>
+    <textarea id="postInput" placeholder="اكتب شفرتك الفكرية هنا..."></textarea>
+    <button onclick="submitPost()">نشر</button>
 
-<div class="phase">
-  <h2>القيم الحاكمة</h2>
-  <ul>
-    <li>لا مضاربة</li>
-    <li>لا مركزية ملكية</li>
-    <li>الكرامة الرقمية فوق الربح</li>
-    <li>كل وحدة = إنسان له قيمة</li>
-  </ul>
-</div>
+    <section id="posts"></section>
 
-<div class="magic">#فضي_الوحدة_الرقمية</div>
+    <div class="nav">
+      <a href="wallet.html">محفظتي الفكرية</a>
+      <a href="#">حول المشروع</a>
+    </div>
+  </main>
 
-  </section>  <footer>
-    &copy; 2025 شبكة فضي | Digital Unit Project
-  </footer>
+  <script>
+    function submitPost() {
+      const input = document.getElementById('postInput');
+      const text = input.value.trim();
+      if (!text) return;
+      const posts = JSON.parse(localStorage.getItem('blocknote_posts')) || [];
+      const now = new Date();
+      const time = now.toLocaleString('ar-EG');
+      const post = {
+        user: 'مستخدم_حر',
+        time,
+        content: text
+      };
+      posts.push(post);
+      localStorage.setItem('blocknote_posts', JSON.stringify(posts));
+      input.value = '';
+      renderPosts();
+    }
+
+    function renderPosts() {
+      const container = document.getElementById('posts');
+      const posts = JSON.parse(localStorage.getItem('blocknote_posts')) || [];
+      container.innerHTML = '';
+      posts.reverse().forEach(post => {
+        const postEl = document.createElement('section');
+        postEl.className = 'post';
+        postEl.innerHTML = `
+          <div class="meta">@${post.user} · ${post.time}</div>
+          <div class="content">${post.content}</div>
+        `;
+        container.appendChild(postEl);
+      });
+    }
+
+    window.onload = renderPosts;
+  </script>
 </body>
 </html>
