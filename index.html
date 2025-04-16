@@ -1,96 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BlockNote</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>قريباً - Coming Soon</title>
   <style>
-    <nav style="background: #111; padding: 10px; text-align: center;">
-  <a href="index.html" style="color: white; margin: 0 10px;">الرئيسية</a>
-  <a href="wallet.html" style="color: white; margin: 0 10px;">محفظتي</a>
-  <a href="profile.html" style="color: white; margin: 0 10px;">صفحتي</a>
-  <a href="public.html" style="color: white; margin: 0 10px;">الصفحة العامة</a>
-</nav>
     body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #f1f1f1;
+      font-family: Tahoma, sans-serif;
+      background: #f4f7f8;
       margin: 0;
-      padding: 2rem;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .container {
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
     }
     h1 {
-      color: #0ff;
-      text-align: center;
+      font-size: 3em;
+      color: #333;
+      margin-bottom: 10px;
     }
-    #postContent {
-      width: 100%;
-      padding: 1rem;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-    }
-    #publishBtn {
-      padding: 0.5rem 1rem;
-      background: #0ff;
-      color: #111;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .note {
-      background: #222;
-      padding: 1rem;
-      margin-top: 1rem;
-      border-left: 4px solid #0ff;
-    }
-    .nav-link {
-      color: #0ff;
-      display: block;
-      text-align: center;
-      margin-top: 1rem;
-      text-decoration: none;
+    p {
+      font-size: 1.2em;
+      color: #666;
     }
   </style>
 </head>
 <body>
-
-  <h1>BlockNote</h1>
-  <textarea id="postContent" rows="4" placeholder="اكتب هنا..."></textarea>
-  <button id="publishBtn">نشر</button>
-
-  <a href="wallet.html" class="nav-link">اذهب إلى محفظتي الفكرية</a>
-
-  <div id="notesContainer"></div>
-
-  <script>
-    function saveNoteAutomatically(note) {
-      const notes = JSON.parse(localStorage.getItem("blockNotes") || "[]");
-      notes.push({ content: note, timestamp: new Date().toISOString() });
-      localStorage.setItem("blockNotes", JSON.stringify(notes));
-    }
-
-    window.onload = function() {
-      const notes = JSON.parse(localStorage.getItem("blockNotes") || "[]");
-      notes.forEach(note => {
-        renderNote(note.content);
-      });
-    };
-
-    document.getElementById("publishBtn").addEventListener("click", function() {
-      const content = document.getElementById("postContent").value;
-      if (content.trim() !== "") {
-        renderNote(content);
-        saveNoteAutomatically(content);
-        document.getElementById("postContent").value = "";
-      }
-    });
-
-    function renderNote(content) {
-      const note = document.createElement("div");
-      note.className = "note";
-      note.textContent = content;
-      document.getElementById("notesContainer").appendChild(note);
-    }
-  </script>
-
+  <div class="container">
+    <h1>Coming Soon</h1>
+    <p>قريباً...</p>
+  </div>
 </body>
 </html>
