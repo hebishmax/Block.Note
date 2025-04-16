@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BlockNote - صفحة مجتمعية للتدوين الحر ومشاركة الأفكار." />
+  <meta name="keywords" content="BlockNote, تدوين, حرية, كريبتو, مجتمع, ملاحظات, تقنية" />
+  <meta name="author" content="Hebish & ChatGPT" />
+  <title>BlockNote - الصفحة العامة</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header>
+    <nav>
+      <h1>BlockNote</h1>
+      <ul>
+        <li><a href="index.html">الصفحة العامة</a></li>
+        <li><a href="wallet.html">محفظتي</a></li>
+        <li><a href="profile.html">ملفي</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="search-section">
+      <input type="text" id="searchInput" placeholder="ابحث في التدوينات...">
+    </section>
+
+    <section id="posts">
+      <article class="post">
+        <p>الفكرة لا تموت إذا كُتبت. — Hebish</p>
+        <button class="like-button" onclick="likePost(this)">إعجاب</button>
+      </article>
+      <article class="post">
+        <p>مرحبًا بكم في BlockNote، حيث تبدأ الحرية بفكرة.</p>
+        <button class="like-button" onclick="likePost(this)">إعجاب</button>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    function likePost(button) {
+      let count = parseInt(button.getAttribute('data-count')) || 0;
+      count++;
+      button.textContent = `إعجاب (${count})`;
+      button.setAttribute('data-count', count);
+    }
+
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const filter = this.value.toLowerCase();
+      const posts = document.querySelectorAll("#posts .post");
+      posts.forEach(post => {
+        const text = post.textContent.toLowerCase();
+        post.style.display = text.includes(filter) ? "block" : "none";
+      });
+    });
+  </script>
+</body>
+
+</html>
