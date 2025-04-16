@@ -1,132 +1,88 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BlockNote - مدونة فكرية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BlockNote</title>
   <style>
     body {
-      background-color: #111;
-      color: #eee;
-      font-family: 'Courier New', Courier, monospace;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #f1f1f1;
       margin: 0;
-      padding: 0;
+      padding: 2rem;
     }
-    header {
-      background-color: #1a1a1a;
-      padding: 1rem;
-      text-align: center;
-      border-bottom: 1px solid #333;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-    main {
-      padding: 1rem;
-      max-width: 600px;
-      margin: auto;
-    }
-    textarea {
-      width: 100%;
-      height: 100px;
-      background: #1f1f1f;
-      color: #eee;
-      border: none;
-      border-radius: 8px;
-      padding: 1rem;
-      font-size: 1rem;
-      resize: none;
-    }
-    button {
-      background: #333;
-      color: #eee;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 0.5rem;
-    }
-    .post {
-      background: #1a1a1a;
-      padding: 1rem;
-      border-radius: 8px;
-      margin: 1rem 0;
-    }
-    .post .meta {
-      font-size: 0.8rem;
-      color: #999;
-      margin-bottom: 0.5rem;
-    }
-    .post .content {
-      font-size: 1rem;
-    }
-    .nav {
-      text-align: center;
-      margin-top: 2rem;
-    }
-    .nav a {
+    h1 {
       color: #0ff;
-      text-decoration: none;
-      font-size: 0.9rem;
-      margin: 0 1rem;
+      text-align: center;
+    }
+    #postContent {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    #publishBtn {
+      padding: 0.5rem 1rem;
+      background: #0ff;
+      color: #111;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .note {
+      background: #222;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-left: 4px solid #0ff;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>BlockNote - مدونة فكرية</h1>
-  </header>
-  <main>
-    <textarea id="postInput" placeholder="اكتب شفرتك الفكرية هنا..."></textarea>
-    <button onclick="submitPost()">نشر</button>
 
-    <section id="posts"></section>
+  <h1>BlockNote</h1>
+  <textarea id="postContent" rows="4" placeholder="اكتب هنا..."></textarea>
+  <button id="publishBtn">نشر</button>
 
-    <div class="nav">
-      <a href="wallet.html">محفظتي الفكرية</a>
-      <a href="#">حول المشروع</a>
-    </div>
-  </main><div style="text-align:center; margin-top: 1rem; font-size: 1.2rem;">
-  ⚡✎ “لأن الفكرة لا تموت إذا كُتبت.”<br>
-  ✒️ المؤسس: ☰ Hebish ⊕ ChatGPT
-</div>
+  <div id="notesContainer"></div>
 
   <script>
-    function submitPost() {
-      const input = document.getElementById('postInput');
-      const text = input.value.trim();
-      if (!text) return;
-      const posts = JSON.parse(localStorage.getItem('blocknote_posts')) || [];
-      const now = new Date();
-      const time = now.toLocaleString('ar-EG');
-      const post = {
-        user: 'مستخدم_حر',
-        time,
-        content: text
-      };
-      posts.push(post);
-      localStorage.setItem('blocknote_posts', JSON.stringify(posts));
-      input.value = '';
-      renderPosts();
-    }
-
-    function renderPosts() {
-      const container = document.getElementById('posts');
-      const posts = JSON.parse(localStorage.getItem('blocknote_posts')) || [];
-      container.innerHTML = '';
-      posts.reverse().forEach(post => {
-        const postEl = document.createElement('section');
-        postEl.className = 'post';
-        postEl.innerHTML = `
-          <div class="meta">@${post.user} · ${post.time}</div>
-          <div class="content">${post.content}</div>
-        `;
-        container.appendChild(postEl);
+    // تخزين تلقائي للتدوينات في localStorage
+    function saveNoteAutomatically(note) {
+      const notes = JSON.parse(localStorage.getItem("blockNotes") || "[]");
+      notes.push({
+        content: note,
+        timestamp: new Date().toISOString()
       });
+      localStorage.setItem("blockNotes", JSON.stringify(notes));
     }
 
-    window.onload = renderPosts;
+    // تحميل التدوينات عند تشغيل الصفحة
+    window.onload = function() {
+      const notes = JSON.parse(localStorage.getItem("blockNotes") || "[]");
+      notes.forEach(note => {
+        renderNote(note.content);
+      });
+    };
+
+    // مثال استخدام عند الضغط على زر "نشر"
+    document.getElementById("publishBtn").addEventListener("click", function() {
+      const content = document.getElementById("postContent").value;
+      if (content.trim() !== "") {
+        renderNote(content);       // عرض التدوينة
+        saveNoteAutomatically(content); // حفظها تلقائيًا
+        document.getElementById("postContent").value = "";
+      }
+    });
+
+    // دالة عرض التدوينة على الصفحة
+    function renderNote(content) {
+      const note = document.createElement("div");
+      note.className = "note";
+      note.textContent = content;
+      document.getElementById("notesContainer").appendChild(note);
+    }
   </script>
+
 </body>
 </html>
