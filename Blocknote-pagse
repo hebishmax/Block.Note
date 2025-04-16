@@ -10,7 +10,12 @@
   <title>BlockNote - الصفحة العامة</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-
+<nav style="background: #111; padding: 10px; text-align: center;">
+  <a href="index.html" style="color: white; margin: 0 10px;">الرئيسية</a>
+  <a href="wallet.html" style="color: white; margin: 0 10px;">محفظتي</a>
+  <a href="profile.html" style="color: white; margin: 0 10px;">صفحتي</a>
+  <a href="public.html" style="color: white; margin: 0 10px;">الصفحة العامة</a>
+</nav>
 <body>
   <header>
     <nav>
