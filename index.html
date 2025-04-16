@@ -36,6 +36,13 @@
       margin-top: 1rem;
       border-left: 4px solid #0ff;
     }
+    .nav-link {
+      color: #0ff;
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -44,20 +51,17 @@
   <textarea id="postContent" rows="4" placeholder="اكتب هنا..."></textarea>
   <button id="publishBtn">نشر</button>
 
+  <a href="wallet.html" class="nav-link">اذهب إلى محفظتي الفكرية</a>
+
   <div id="notesContainer"></div>
 
   <script>
-    // تخزين تلقائي للتدوينات في localStorage
     function saveNoteAutomatically(note) {
       const notes = JSON.parse(localStorage.getItem("blockNotes") || "[]");
-      notes.push({
-        content: note,
-        timestamp: new Date().toISOString()
-      });
+      notes.push({ content: note, timestamp: new Date().toISOString() });
       localStorage.setItem("blockNotes", JSON.stringify(notes));
     }
 
-    // تحميل التدوينات عند تشغيل الصفحة
     window.onload = function() {
       const notes = JSON.parse(localStorage.getItem("blockNotes") || "[]");
       notes.forEach(note => {
@@ -65,17 +69,15 @@
       });
     };
 
-    // مثال استخدام عند الضغط على زر "نشر"
     document.getElementById("publishBtn").addEventListener("click", function() {
       const content = document.getElementById("postContent").value;
       if (content.trim() !== "") {
-        renderNote(content);       // عرض التدوينة
-        saveNoteAutomatically(content); // حفظها تلقائيًا
+        renderNote(content);
+        saveNoteAutomatically(content);
         document.getElementById("postContent").value = "";
       }
     });
 
-    // دالة عرض التدوينة على الصفحة
     function renderNote(content) {
       const note = document.createElement("div");
       note.className = "note";
