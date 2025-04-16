@@ -1,87 +1,84 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BlockNote - محفظتي الفكرية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>محفظتي الفكرية - BlockNote</title>
   <style>
     body {
-      background-color: #111;
-      color: #eee;
-      font-family: 'Courier New', Courier, monospace;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #f1f1f1;
       margin: 0;
-      padding: 0;
+      padding: 2rem;
     }
-    header {
-      background-color: #1a1a1a;
-      padding: 1rem;
+    h1 {
+      color: #0ff;
       text-align: center;
-      border-bottom: 1px solid #333;
     }
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-    main {
-      padding: 2rem 1rem;
-      max-width: 800px;
-      margin: auto;
-    }
-    .feature {
-      background: #1f1f1f;
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-    }
-    .feature h2 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-    .feature p {
-      color: #ccc;
-      font-size: 1rem;
-    }
-    .feature ul {
-      color: #bbb;
-      font-size: 1rem;
-    }
-    .nav {
-      text-align: center;
+    #notesContainer {
       margin-top: 2rem;
     }
-    .nav a {
-      color: #0ff;
-      text-decoration: none;
-      font-size: 1rem;
-      margin: 0 1rem;
+    .note {
+      background: #222;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid #0ff;
+    }
+    #exportBtn {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.5rem 1rem;
+      background: #0ff;
+      color: #111;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>BlockNote - محفظتي الفكرية</h1>
-  </header>
-  <main>
-    <section class="feature">
-      <h2>مميزات المشروع</h2>
-      <p>BlockNote هو منصة تدوين فكرية تتيح لك نشر شفراتك الفكرية بطريقة آمنة وسهلة. هذه بعض من المميزات:</p>
-      <ul>
-        <li>واجهة استخدام بسيطة وسهلة</li>
-        <li>محفظتك الفكرية لحفظ جميع أفكارك وشفرتك</li>
-        <li>دعم الاستيراد والتصدير لسهولة حفظ بياناتك</li>
-        <li>تخزين محلي لا يتطلب الاتصال بالإنترنت</li>
-      </ul>
-    </section>
 
-    <section class="feature">
-      <h2>كيفية الاستخدام</h2>
-      <p>ببساطة، اكتب شفراتك الفكرية في المربع المخصص وشاركها مع العالم. بإمكانك أيضًا تصدير أفكارك أو استيرادها في أي وقت.</p>
-    </section>
+  <h1>محفظتي الفكرية</h1>
+  <button id="exportBtn">تصدير التدوينات</button>
 
-    <div class="nav">
-      <a href="index.html">العودة إلى المدونة</a>
-      <a href="wallet.html">محفظتي الفكرية</a>
-    </div>
-  </main>
+  <div id="notesContainer"></div>
+
+  <script>
+    // عرض التدوينات المحفوظة
+    function renderAllNotes() {
+      const notes = JSON.parse(localStorage.getItem("blockNotes") || "[]");
+      const container = document.getElementById("notesContainer");
+      if (notes.length === 0) {
+        container.innerHTML = "<p style='text-align:center;'>لا توجد تدوينات بعد.</p>";
+        return;
+      }
+      notes.forEach(note => {
+        const el = document.createElement("div");
+        el.className = "note";
+        el.textContent = note.content;
+        container.appendChild(el);
+      });
+    }
+
+    // تصدير التدوينات كملف .txt
+    function exportNotes() {
+      const notes = JSON.parse(localStorage.getItem("blockNotes") || "[]");
+      const content = notes.map(n => `- ${n.content}`).join("\n\n");
+      const blob = new Blob([content], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "blocknote.txt";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById("exportBtn").addEventListener("click", exportNotes);
+
+    // تشغيل
+    renderAllNotes();
+  </script>
+
 </body>
 </html>
