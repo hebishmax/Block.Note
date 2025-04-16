@@ -35,17 +35,24 @@
       cursor: pointer;
       font-weight: bold;
     }
+    .nav-link {
+      color: #0ff;
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
 
   <h1>محفظتي الفكرية</h1>
   <button id="exportBtn">تصدير التدوينات</button>
+  <a href="index.html" class="nav-link">العودة إلى صفحة التدوين</a>
 
   <div id="notesContainer"></div>
 
   <script>
-    // عرض التدوينات المحفوظة
     function renderAllNotes() {
       const notes = JSON.parse(localStorage.getItem("blockNotes") || "[]");
       const container = document.getElementById("notesContainer");
@@ -61,7 +68,6 @@
       });
     }
 
-    // تصدير التدوينات كملف .txt
     function exportNotes() {
       const notes = JSON.parse(localStorage.getItem("blockNotes") || "[]");
       const content = notes.map(n => `- ${n.content}`).join("\n\n");
@@ -75,8 +81,6 @@
     }
 
     document.getElementById("exportBtn").addEventListener("click", exportNotes);
-
-    // تشغيل
     renderAllNotes();
   </script>
 
