@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="الموقع الرسمي للفنان Mohamed Hebish بدعم من ChatGPT. استمع إلى أعمال البوب اللاتيني وادعم مشروع فضي الخيري.">
-  <meta name="keywords" content="Mohamed Hebish, موسيقى, بوب لاتيني, فضي, عملة رقمية, دعم خيري">
-  <meta name="author" content="Mohamed Hebish بدعم ChatGPT">
-  <meta name="google-site-verification" content="google7f4fbd39717d3a1c.html" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="الموقع الرسمي للفنان Mohamed Hebish بدعم من ChatGPT. استمع إلى أعمال البوب اللاتيني وادعم مشروع فضي الخيري.">
+  <meta name="keywords" content="Mohamed Hebish, موسيقى, بوب لاتيني, فضي, عملة رقمية, دعم خيري">
+  <meta name="author" content="Mohamed Hebish بدعم ChatGPT">
+  <meta name="google-site-verification" content="google7f4fbd39717d3a1c.html" />
+  
+  <!-- Open Graph Meta Tags for Social Media -->
+  <meta property="og:title" content="Mohamed Hebish | موسيقى بوب لاتيني">
+  <meta property="og:description" content="استمع إلى أعمال محمد حبيش الموسيقية في البوب اللاتيني، مع دعم لمشروع فضي الخيري.">
+  <meta property="og:image" content="https://ipfs.io/ipfs/bafybeid6dnr2x2uipvpgwzf3e26i2fqcl6marwgh3wnn4tmojaxnfyg44a">
+  <meta property="og:url" content="https://hebishmax.github.io/Mohamed.Hebish/">
+  
   <title>Mohamed Hebish | موسيقى بوب لاتيني</title>
   <link rel="icon" href="https://ipfs.io/ipfs/bafybeid6dnr2x2uipvpgwzf3e26i2fqcl6marwgh3wnn4tmojaxnfyg44a" type="image/png">
+
+  <!-- Minified CSS File -->
+  <link rel="stylesheet" href="styles.min.css"> <!-- Use minified version for faster loading -->
+
   <style>
+    /* Inline Critical CSS for faster rendering (for above-the-fold content) */
     body { font-family: 'Segoe UI', sans-serif; background: #121212; color: #fff; margin: 0; padding: 0; text-align: center; }
     header { padding: 2rem 1rem; background-color: #1f1f1f; }
     h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
@@ -18,8 +30,14 @@
     iframe { width: 90%; max-width: 720px; height: 405px; border-radius: 16px; }
     .logo { margin-top: 2rem; }
     img.logo-img { width: 160px; border-radius: 20px; }
+    .social-links { margin-top: 2.5rem; }
+    .social-links a { display: inline-block; margin: 0 1rem; color: #00aced; text-decoration: none; font-weight: bold; transition: color 0.3s; }
+    .social-links a:hover { color: #1db954; }
     footer { margin-top: 3rem; padding: 1rem; background-color: #1a1a1a; font-size: 0.9rem; }
   </style>
+
+  <!-- Async Load JS -->
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
   <header>
@@ -27,8 +45,9 @@
     <p>فنان يقدم موسيقى البوب اللاتيني برسالة إنسانية.. يدعم مشروع <strong>فضي</strong></p>
   </header>
 
+  <!-- Lazy Load Video -->
   <div class="video-container">
-    <iframe src="https://player.vimeo.com/video/1076840913" frameborder="0" allowfullscreen></iframe>
+    <iframe data-src="https://player.vimeo.com/video/1076840913" frameborder="0" allowfullscreen loading="lazy"></iframe>
   </div>
 
   <div class="logo">
@@ -36,8 +55,23 @@
     <img class="logo-img" src="https://ipfs.io/ipfs/bafybeid6dnr2x2uipvpgwzf3e26i2fqcl6marwgh3wnn4tmojaxnfyg44a" alt="Silver Token Logo">
   </div>
 
+  <div class="social-links">
+    <h3>تابعني على المنصات:</h3>
+    <a href="https://www.facebook.com/share/1C85pnQLgQ/" target="_blank">فيسبوك</a>
+    <a href="https://youtube.com/@silverblockchain?si=M_u_i7MozLqL_Xw2" target="_blank">قناة فضي الخيري</a>
+    <a href="https://youtube.com/channel/UCJ-UZrGl34_dugb-xfkdm9A?si=orK9CrTQm5q2aBoA" target="_blank">قناة أعمالي</a>
+  </div>
+
   <footer>
     <p>&copy; 2025 Mohamed Hebish - جميع الحقوق محفوظة. الموقع بدعم من ChatGPT</p>
   </footer>
+
+  <!-- Lazy Loading JS for Vimeo -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var iframe = document.querySelector('iframe[data-src]');
+      iframe.src = iframe.getAttribute('data-src');
+    });
+  </script>
 </body>
 </html>
